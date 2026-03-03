@@ -10,7 +10,7 @@ function Register(){
         e.preventDefault();
         try{
             const res = await axios.post(
-                "http://localhost:5000/api/auth/register",
+                "https://codefolio-r8zm.onrender.com/api/auth/register",
                 { email,password }
             );
             alert(res.data.message);
