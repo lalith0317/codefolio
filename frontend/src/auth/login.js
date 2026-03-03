@@ -12,7 +12,7 @@ const handleSubmit = async (e) => {
 
     try {
     const res = await axios.post(
-        "http://codefolio-r8zm.onrender.com/login",
+        `${API}/auth/login`,
         { email, password }
     );
 
