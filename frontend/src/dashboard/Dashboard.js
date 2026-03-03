@@ -52,7 +52,7 @@ useEffect(() => {
 
 const fetchProfile = async () => {
     const res = await axios.get(
-        "http://localhost:5000/api/user/profile",
+        "https://codefolio-r8zm.onrender.com/api/user/profile",
         {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -65,7 +65,7 @@ const fetchProfile = async () => {
 
 const fetchProjects = async () => {
     const res = await axios.get(
-        "http://localhost:5000/api/projects",
+        "https://codefolio-r8zm.onrender.com/api/projects",
         {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -96,7 +96,7 @@ const handleProfileSubmit = async (e) => {
     const token = localStorage.getItem("token");
 
     await axios.put(
-        "http://localhost:5000/api/user/profile",
+        "https://codefolio-r8zm.onrender.com/api/user/profile",
         profile,
         {
             headers: {
@@ -177,7 +177,7 @@ const formData = new FormData();
     formData.append("image", newProject.image);
 
 const res = await axios.post(
-    "http://localhost:5000/api/projects",
+    "https://codefolio-r8zm.onrender.com/api/projects",
     formData,
     {
     headers:{
@@ -206,7 +206,7 @@ const handleDelete = async (id) => {
     const token = localStorage.getItem("token");
 
     await axios.delete(
-        `http://localhost:5000/api/projects/${id}`,
+        `https://codefolio-r8zm.onrender.com/api/projects/${id}`,
         {
             headers: {
             Authorization: `Bearer ${token}`
@@ -232,7 +232,7 @@ const handleUpdate = async (project) => {
     try {
 
         const res = await axios.put(
-            `http://localhost:5000/api/projects/${project._id}`,
+            `https://codefolio-r8zm.onrender.com/api/projects/${project._id}`,
             updatedProject,
             {
                 headers: {
@@ -280,7 +280,7 @@ const handleImportGithub = async () => {
         const username = profile.github.split("/").pop();
 
         const res = await axios.get(
-            `http://localhost:5000/api/github/${username}`
+            `https://codefolio-r8zm.onrender.com/api/github/${username}`
         );
 
         const token = localStorage.getItem("token");
@@ -294,7 +294,7 @@ const handleImportGithub = async () => {
         for (const repo of newRepos) {
 
             await axios.post(
-                "http://localhost:5000/api/projects",
+                "https://codefolio-r8zm.onrender.com/api/projects",
                 repo,
                 {
                     headers: {
