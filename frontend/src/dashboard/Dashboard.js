@@ -297,8 +297,8 @@ const handleImportGithub = async () => {
                 "https://codefolio-r8zm.onrender.com/api/projects",
                 {
                     title: repo.name,
-                    description: repo.description,
-                    techStack: [repo.techStack],
+                    description: repo.description || "",
+                    techStack: repo.language ? [repo.language] : [],
                     repoLink: repo.html_url,
                     liveLink: ""
                 },

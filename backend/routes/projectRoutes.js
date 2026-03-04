@@ -10,20 +10,20 @@ const Project = require("../models/Project");
 router.post("/", protect, async (req, res) => {
 
     try {
-
-        const { title, description, techStack, repoLink, liveLink } = req.body;
-        if(!title){
+        if(!req.body){
             return res.status(400).json({
-                message: "Title is required"
+                message: "No data received"
             });
         }
+        const { title, description, techStack, repoLink, liveLink } = req.body;
+
         const project = new Project({
             title,
             description,
             techStack,
             repoLink,
             liveLink,
-            user: req.user._id
+            user: req.user.id
         });
 
         const savedProject = await project.save();
