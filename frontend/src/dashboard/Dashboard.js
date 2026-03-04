@@ -277,7 +277,7 @@ const handleImportGithub = async () => {
 
     try {
 
-        const username = profile.github.split("/").pop();
+        const username = profile.github.split("github.com/").pop();
 
         const res = await axios.get(
             `https://codefolio-r8zm.onrender.com/api/github/${username}`
