@@ -280,7 +280,7 @@ const handleImportGithub = async () => {
         const username = profile.github.split("github.com/").pop();
 
         const res = await axios.get(
-            `https://codefolio-r8zm.onrender.com/api/github/lalith0317`
+            `https://codefolio-r8zm.onrender.com/api/github/${username}`
         );
 
         const token = localStorage.getItem("token");
@@ -316,7 +316,7 @@ const handleImportGithub = async () => {
         window.location.reload();
 
     } catch (error) {
-
+        
         console.log(error);
 
         toast.error("Import failed");
