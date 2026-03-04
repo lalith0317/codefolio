@@ -18,7 +18,8 @@ router.get("/:username", async (req, res) => {
                 title: repo.name,
                 description: repo.description || "GitHub Repository",
                 repoLink: repo.html_url,
-                techStack: repo.language ? [repo.language] : []
+                techStack: repo.language ? [repo.language] : [],
+                livelink: ""
             }));
 
         res.json(repos);
