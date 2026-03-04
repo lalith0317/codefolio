@@ -280,7 +280,7 @@ const handleImportGithub = async () => {
         const username = profile.github.split("github.com/").pop();
 
         const res = await axios.get(
-            `https://codefolio-r8zm.onrender.com/api/github/${username}`
+            `https://codefolio-r8zm.onrender.com/api/github/lalith0317`
         );
 
         const token = localStorage.getItem("token");
