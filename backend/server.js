@@ -8,7 +8,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use("/uploads", express.static("uploads"));
+
 app.use("/api/github", require("./routes/githubRoutes"));
+app.use("/api/auth", require("./routes/auth"));
+app.use("/api/user", require("./routes/userRoutes"));
+app.use("/api/projects", require("./routes/projectRoutes"));
+app.use("/api/public", require("./routes/publicRoutes"));
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
@@ -25,10 +30,7 @@ app.get("/", (req, res) => {
   res.send("CodeFolio Backend Running");
 });
 
-app.use("/api/auth", require("./routes/auth"));
-app.use("/api/user", require("./routes/userRoutes"));
-app.use("/api/projects", require("./routes/projectRoutes"));
-app.use("/api/public", require("./routes/publicRoutes"));
+
 
 const PORT = process.env.PORT || 5000;
 

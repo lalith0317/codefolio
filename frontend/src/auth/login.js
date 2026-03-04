@@ -13,7 +13,7 @@ const handleSubmit = async (e) => {
 
     try {
     const res = await axios.post(
-        `${API}/auth/login`,
+        `${API}/api/auth/login`,
         { email, password }
     );
 
