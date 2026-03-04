@@ -12,7 +12,11 @@ router.post("/", protect, async (req, res) => {
     try {
 
         const { title, description, techStack, repoLink, liveLink } = req.body;
-
+        if(!title){
+            return res.status(400).json({
+                message: "Title is required"
+            });
+        }
         const project = new Project({
             title,
             description,
@@ -24,7 +28,7 @@ router.post("/", protect, async (req, res) => {
 
         const savedProject = await project.save();
 
-        res.json(savedProject);
+        res.status(201).json(savedProject);
 
     } catch (error) {
 

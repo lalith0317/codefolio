@@ -295,7 +295,13 @@ const handleImportGithub = async () => {
 
             await axios.post(
                 "https://codefolio-r8zm.onrender.com/api/projects",
-                repo,
+                {
+                    title: repo.name,
+                    description: repo.description,
+                    techStack: [repo.techStack],
+                    repoLink: repo.html_url,
+                    liveLink: ""
+                },
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
