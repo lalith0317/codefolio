@@ -1,3 +1,31 @@
-import Home from "./pages/Home";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-<Route path="/" element={<Home />} />
+import Dashboard from "./pages/Dashboard";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Portfolio from "./pages/Portfolio";
+import Register from "./pages/Register";
+
+function App() {
+return (
+    <BrowserRouter>
+
+    <Routes>
+
+        <Route path="/" element={<Home />} />
+
+        <Route path="/login" element={<Login />} />
+
+        <Route path="/register" element={<Register />} />
+
+        <Route path="/dashboard" element={<Dashboard />} />
+
+        <Route path="/:username" element={<Portfolio />} />
+
+    </Routes>
+
+    </BrowserRouter>
+);
+}
+
+export default App;

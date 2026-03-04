@@ -5,7 +5,7 @@ return (
     <nav className="flex justify-between items-center px-10 py-6 bg-gray-900 text-white">
 
         <h1 className="text-2xl font-bold text-indigo-400">
-            Codefolio
+            CODEFOLIO
         </h1>
 
         <div className="space-x-6">
