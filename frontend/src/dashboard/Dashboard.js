@@ -278,7 +278,7 @@ const handleImportGithub = async () => {
     try {
 
         const username = profile.github.split("github.com/").pop();
-
+        
         const res = await axios.get(
             `https://codefolio-r8zm.onrender.com/api/github/${username}`
         );
@@ -288,7 +288,7 @@ const handleImportGithub = async () => {
         const existingTitles = projects.map(p => p.title.toLowerCase());
 
         const newRepos = res.data.filter(repo =>
-            !existingTitles.includes(repo.title.toLowerCase())
+            !existingTitles.includes(repo.name.toLowerCase())
         );
 
         for (const repo of newRepos) {
@@ -297,14 +297,15 @@ const handleImportGithub = async () => {
                 "https://codefolio-r8zm.onrender.com/api/projects",
                 {
                     title: repo.name,
-                    description: repo.description || "",
+                    description: repo.description || "No description",
                     techStack: repo.language ? [repo.language] : [],
                     repoLink: repo.html_url,
                     liveLink: ""
                 },
                 {
                     headers: {
-                        Authorization: `Bearer ${token}`
+                        Authorization: `Bearer ${token}`,
+                        "content-Type": "application/json"
                     }
                 }
             );
@@ -316,8 +317,8 @@ const handleImportGithub = async () => {
         window.location.reload();
 
     } catch (error) {
-        
-        console.log(error);
+
+        console.log("IMPORT ERROR:", error.response?.data || error.message);
 
         toast.error("Import failed");
 
