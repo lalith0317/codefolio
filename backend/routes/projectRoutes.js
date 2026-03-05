@@ -25,7 +25,7 @@ router.post("/", protect, async (req, res) => {
             techStack,
             repoLink,
             liveLink,
-            user: req.user._id
+            user: req.user.id
         });
 
         const savedProject = await project.save();
@@ -52,7 +52,7 @@ router.get("/", protect, async (req, res) => {
     try {
 
         const projects = await Project.find({
-            user: req.user._id
+            user: req.user.id
         }).sort({ createdAt: -1 });
 
         res.json(projects);
