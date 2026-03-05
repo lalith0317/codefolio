@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const publicRoutes = require("./routes/publicRoutes");
 
 const app = express();
 const githubRoutes = require("./routes/githubRoutes");
@@ -12,6 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static("uploads"));
 
+app.use("/api/public", publicRoutes);
 app.use("/api/github", githubRoutes);
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/user", require("./routes/userRoutes"));
