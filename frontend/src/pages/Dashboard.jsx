@@ -276,6 +276,8 @@ const techStats = getTechStats();
 const handleImportGithub = async () => {
 try {
 
+    console.log("Import started");
+
     const username = profile.github
         .replace("https://github.com/", "")
         .replace("/", "");
@@ -283,6 +285,8 @@ try {
     const res = await axios.get(
         `https://codefolio-r8zm.onrender.com/api/github/${username}`
     );
+
+    console.log("Repos fetched:", res.data);
 
     const token = localStorage.getItem("token");
 
@@ -292,37 +296,34 @@ try {
         repo => !existingTitles.includes(repo.name.toLowerCase())
     );
 
-    if (!newRepos.length) {
-        toast("No new repositories to import");
-        return;
-    }
+    console.log("New repos:", newRepos);
 
     for (const repo of newRepos) {
-        await axios.post(
-            "https://codefolio-r8zm.onrender.com/api/projects",
-            {
+    await axios.post(
+        "https://codefolio-r8zm.onrender.com/api/projects",
+        {
             title: repo.name,
             description: repo.description || "No description",
             repoLink: repo.html_url,
             liveLink: "",
             techStack: repo.language ? [repo.language] : []
-            },
-            {
+        },
+        {
             headers: {
                 Authorization: `Bearer ${token}`
             }
-            }
-        );
+        }
+    );
     }
 
     toast.success("GitHub repos imported");
 
     window.location.reload();
 
-    } catch (error) {
-        console.log("IMPORT ERROR:", error.response?.data || error.message);
-        toast.error("Import failed");
-    }
+} catch (error) {
+    console.log("IMPORT ERROR:", error.response?.data || error.message);
+    toast.error("Import failed");
+}
 };
 
 return (
