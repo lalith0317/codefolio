@@ -68,31 +68,30 @@ const exportPDF = async () => {
 };
 
 return (
+<div
+    id="portfolio"
+    className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-900 dark:to-black"
+>
+    <div className="max-w-6xl mx-auto p-8">
 
-    
-        <div id="portfolio" className="min-h-screen bg-gray-100 dark:bg-gray-900">
-        <div className="max-w-6xl mx-auto p-8">
-
-        {/* PROFILE HEADER */}
+      {/* PROFILE HEADER */}
 
         <div className="text-center mb-12">
-
-            <h1 className="text-4xl font-bold mb-2">
+            <h1 className="text-5xl font-extrabold text-gray-800 dark:text-white">
             {profile.name}
             </h1>
 
-            <p className="text-gray-600 dark:text-gray-300">
+            <p className="mt-3 text-gray-600 dark:text-gray-300 max-w-xl mx-auto">
             {profile.bio}
             </p>
 
-            <div className="flex justify-center gap-6 mt-4">
-
+            <div className="flex justify-center gap-6 mt-5">
             {profile.github && (
                 <a
-                    href={profile.github}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-blue-500 font-semibold"
+                href={profile.github}
+                target="_blank"
+                rel="noreferrer"
+                className="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition"
                 >
                 GitHub
                 </a>
@@ -100,122 +99,119 @@ return (
 
             {profile.linkedin && (
                 <a
-                    href={profile.linkedin}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-blue-500 font-semibold"
+                href={profile.linkedin}
+                target="_blank"
+                rel="noreferrer"
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
                 >
                 LinkedIn
                 </a>
             )}
-
+            </div>
         </div>
 
+      {/* PORTFOLIO VISITS */}
+
+        <div className="flex justify-center mb-8">
+            <div className="bg-white dark:bg-gray-800 px-6 py-4 rounded-xl shadow text-center">
+            <p className="text-gray-500 text-sm">Portfolio Visits</p>
+
+            <h2 className="text-2xl font-bold text-indigo-600">
+                {profile.visits}
+            </h2>
+            </div>
         </div>
-        <button
+
+      {/* DOWNLOAD BUTTON */}
+
+        <div className="flex justify-center mb-10">
+            <button
             onClick={exportPDF}
-            className="mb-8 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition">
+            className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 shadow transition"
+            >
             Download Portfolio PDF
-        </button>
-        <p className = "text-sm text-gray-500 mb-4">Portfolio Visits: {profile.visits}</p>
+            </button>
+        </div>
 
+      {/* PROJECT TITLE */}
 
-        {/* PROJECTS */}
-
-        <h2 className="text-2xl font-bold mb-8 text-center">
+        <h2 className="text-3xl font-bold mb-10 text-center text-gray-800 dark:text-white">
             Projects
         </h2>
 
         {projects.length === 0 ? (
-
-            <p className="text-center">No projects</p>
-
-        ) : (
-
+            <p className="text-center text-gray-500">No projects added yet</p>
+        ) :(
             <div className="grid md:grid-cols-2 gap-8">
+                {projects.map((project) => {
 
-            {projects.map((project) => {
-
-              // Fix nested array issue
-                const techStack =
-                Array.isArray(project.techStack?.[0])
+                    const techStack =
+                    Array.isArray(project.techStack?.[0])
                     ? project.techStack[0]
                     : project.techStack || [];
 
                 return (
+                    <div
+                        key={project._id}
+                        className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 hover:shadow-2xl hover:-translate-y-1 transition duration-300"
+                    >
 
-                <div
-                    key={project._id}
-                    className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 hover:scale-105 transition"
-                >
-
-                    <h3 className="text-xl font-bold mb-2">
+                        <h3 className="text-2xl font-semibold text-gray-800 dark:text-white mb-2">
                         {project.title}
-                    </h3>
+                        </h3>
 
-                    <p className="text-gray-600 dark:text-gray-300 mb-4">
+                        <p className="text-gray-600 dark:text-gray-300 mb-4">
                         {project.description}
-                    </p>
+                        </p>
 
+                {/* TECH STACK */}
 
-                  {/* TECH STACK */}
-
-                    <div className="flex flex-wrap gap-2 mb-4">
-
-                    {techStack.map((tech, index) => (
+                    <div className="flex flex-wrap gap-2 mb-5">
+                        {techStack.map((tech, index) => (
                         <span
-                            key={index}
-                            className="px-3 py-1 bg-blue-100 text-blue-700 text-sm rounded-full"
+                        key={index}
+                        className="px-3 py-1 text-sm bg-indigo-100 text-indigo-700 rounded-full"
                         >
                         {tech}
                         </span>
-                    ))}
-
+                ))}
                     </div>
 
+                {/* LINKS */}
 
-                  {/* LINKS */}
-
-                    <div className="flex gap-4">
-
+                    <div className="flex gap-5">
                     {project.repoLink && (
                         <a
-                            href={project.repoLink}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="text-blue-600 font-semibold"
+                        href={project.repoLink}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-blue-600 font-semibold hover:underline"
                         >
-                        GitHub
+                        View Code
                         </a>
                     )}
 
                     {project.liveLink && (
                         <a
-                            href={project.liveLink}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="text-green-600 font-semibold"
+                        href={project.liveLink}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-green-600 font-semibold hover:underline"
                         >
                         Live Demo
                         </a>
                     )}
-
-                    </div>
-
-                </div>
-
-                );
-
-            })}
-
             </div>
 
-        )}
+            </div>
+                );
 
+        })}
         </div>
+    )}
 
     </div>
-
+</div>
 );
 }
 
