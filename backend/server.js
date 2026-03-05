@@ -9,6 +9,7 @@ const githubRoutes = require("./routes/githubRoutes");
 
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static("uploads"));
 
 app.use("/api/github", githubRoutes);
