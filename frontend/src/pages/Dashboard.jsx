@@ -173,7 +173,7 @@ const formData = new FormData();
     formData.append("description", newProject.description);
     formData.append("repoLink", newProject.repoLink);
     formData.append("liveLink", newProject.liveLink);
-    formData.append("techStack", techArray);
+    formData.append("techStack", JSON.stringify(techArray));
     formData.append("image", newProject.image);
 
 const res = await axios.post(
@@ -299,7 +299,7 @@ const handleImportGithub = async () => {
         formData.append("description", repo.description || "No description");
         formData.append("repoLink", repo.html_url);
         formData.append("liveLink", "");
-        formData.append("techStack", repo.language ? repo.language : "");
+        formData.append("techStack", JSON.stringify(repo.language ? [repo.language] : []));
 
         await axios.post(
             "https://codefolio-r8zm.onrender.com/api/projects",
