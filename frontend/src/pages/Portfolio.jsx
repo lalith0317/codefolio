@@ -63,7 +63,7 @@ const exportPDF = async () => {
 
     pdf.addImage(imgData,"PNG",0,0,width,height);
 
-    pdf.save(`${profile.name}-portfolio.pdf`);
+    pdf.save(`${profile.username}-portfolio.pdf`);
     
 };
 
@@ -78,7 +78,7 @@ return (
 
         <div className="text-center mb-12">
             <h1 className="text-5xl font-extrabold text-gray-800 dark:text-white">
-            {profile.name}
+            {profile.username}
             </h1>
 
             <p className="mt-3 text-gray-600 dark:text-gray-300 max-w-xl mx-auto">

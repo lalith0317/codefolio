@@ -22,7 +22,11 @@ try {
     });
 
     res.json({
-        user,
+        name: user.username,
+        bio: user.bio,
+        github: user.github,
+        linkedin: user.linkedin,
+        visits: user.visits,
         projects
     });
 
