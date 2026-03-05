@@ -238,8 +238,13 @@ const handleUpdate = async (project) => {
             }
         );
 
-        setProjects(prev =>
-            prev.map(p =>
+        
+        if (!res || !res.data) {
+            throw new Error("Invalid response");
+        }
+
+        setProjects(prevProjects =>
+            prevProjects.map(p =>
                 p._id === project._id ? res.data : p
             )
         );
@@ -255,6 +260,7 @@ const handleUpdate = async (project) => {
         toast.error("Update failed");
 
     }
+
 };
 const handleLogout = () => {
 
