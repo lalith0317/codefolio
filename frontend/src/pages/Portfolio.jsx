@@ -19,7 +19,7 @@ const fetchPortfolio = async () => {
     try {
 
         const res = await axios.get(
-            `https://codefolio-r8zm.onrender.com/api/public/portfolio/${username}`
+            `https://codefolio-r8zm.onrender.com/api/public/portfolio/${username.toLowerCase()}`
         );
 
         setProfile(res.data);

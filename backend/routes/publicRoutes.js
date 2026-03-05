@@ -8,7 +8,7 @@ router.get("/portfolio/:username", async (req, res) => {
 try {
 
     const user = await User.findOne({
-        username: req.params.username
+        username: new RegExp(`^${req.params.username}$`, "i")
     }).select("-password");
 
     if (!user) {
