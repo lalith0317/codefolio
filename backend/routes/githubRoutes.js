@@ -1,39 +1,25 @@
 const express = require("express");
 const axios = require("axios");
+
 const router = express.Router();
 
 router.get("/:username", async (req, res) => {
+try {
+    const username = req.params.username;
 
-    try {
+    const response = await axios.get(
+        `https://api.github.com/users/${username}/repos`
+    );
 
-        const githubUsername = req.params.username;
+    res.json(response.data);
 
-        const response = await axios.get(
-            `https://api.github.com/users/${githubUsername}/repos?sort=updated&per_page=10`
-        );
+} catch (error) {
+    console.log("GitHub API ERROR:", error.response?.data || error.message);
 
-        const repos = response.data
-            .filter(repo => !repo.fork) // ignore forks
-            .map(repo => ({
-                title: repo.name,
-                description: repo.description || "GitHub Repository",
-                repoLink: repo.html_url,
-                techStack: repo.language ? [repo.language] : [],
-                livelink: ""
-            }));
-
-        res.json(repos);
-
-    } catch (error) {
-
-        console.error(error.response?.data || error.message);
-
-        res.status(500).json({
-            message: "Failed to fetch GitHub repos"
-        });
-
-    }
-
+    res.status(500).json({
+        message: "Failed to fetch GitHub repos"
+    });
+}
 });
 
 module.exports = router;
