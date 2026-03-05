@@ -17,6 +17,9 @@ try {
         });
     }
 
+    user.visits = (user.visits || 0) + 1;
+    await user.save();
+    
     const projects = await Project.find({
         user: user._id
     });
