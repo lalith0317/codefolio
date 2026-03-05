@@ -127,21 +127,22 @@ router.delete("/:id", protect, async (req, res) => {
             });
         }
 
-        if (project.user.toString() !== req.user._id.toString()) {
+        // Safe comparison
+        if (project.user.toString() !== req.user.id) {
             return res.status(401).json({
                 message: "Not authorized"
             });
         }
 
-        await project.deleteOne();
+        await Project.findByIdAndDelete(req.params.id);
 
         res.json({
-            message: "Project deleted"
+            message: "Project removed"
         });
 
     } catch (error) {
 
-        console.error(error);
+        console.error("DELETE ERROR:", error);
 
         res.status(500).json({
             message: "Server error"
