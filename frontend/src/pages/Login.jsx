@@ -1,29 +1,31 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import API from "../services/api";
 
 export default function Login() {
 const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
 
-const handleSubmit = (e) => {
+const navigate = useNavigate();
+
+const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({ email, password });
-};
-const handleLogin = async () => {
-try {
-    const res = await API.post("/auth/login", {
-        email,
-        password
-    });
 
-    localStorage.setItem("token", res.data.token);
+    try {
+        const res = await API.post("/auth/login", {
+            email,
+            password
+        });
 
-    alert("Login successful");
-} catch (err) {
-    console.error(err);
-    alert("Login failed");
-}
+        localStorage.setItem("token", res.data.token);
+
+        alert("Login successful");
+
+        navigate("/dashboard"); // redirect after login
+    } catch (err) {
+        console.error(err);
+        alert("Login failed");
+    }
 };
 
 return (
@@ -71,6 +73,6 @@ return (
 
         </div>
 
-        </div>
-    );
+    </div>
+);
 }
