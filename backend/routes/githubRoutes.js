@@ -8,7 +8,13 @@ try {
     const username = req.params.username;
 
     const response = await axios.get(
-        `https://api.github.com/users/${username}/repos`
+        `https://api.github.com/users/${username}/repos`,
+        {
+            headers: {
+                Authorization: `token ${process.env.GITHUB_TOKEN}`,
+                "User-Agent": "CodeFolio-App"
+            }
+        }
     );
 
     res.json(response.data);
