@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Register() {
-const name = useState("");
+
 const navigate = useNavigate();
 const [username, setUsername] = useState("");
 const [email, setEmail] = useState("");
@@ -19,7 +19,7 @@ const handleSubmit = async (e) => {
         await axios.post(
             "https://codefolio-r8zm.onrender.com/api/auth/register",
             {
-                name,
+                username,
                 email,
                 password
             }
