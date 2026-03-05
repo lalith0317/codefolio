@@ -84,7 +84,7 @@ router.put("/:id", protect, async (req, res) => {
             });
         }
 
-        if (project.user.toString() !== req.user._id.toString()) {
+        if (project.user.toString() !== req.user.id.toString()) {
             return res.status(401).json({
                 message: "Not authorized"
             });
