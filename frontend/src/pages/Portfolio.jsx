@@ -49,22 +49,66 @@ if (profile === null) {
 
 const exportPDF = async () => {
 
-    const element = document.getElementById("portfolio");
+const element = document.getElementById("portfolio");
 
-    const canvas = await html2canvas(element);
+const canvas = await html2canvas(element, {
+    scale: 2,
+    useCORS: true
+});
 
-    const imgData = canvas.toDataURL("image/png");
+const imgData = canvas.toDataURL("image/png");
 
-    const pdf = new jsPDF("p","mm","a4");
+const pdf = new jsPDF("p", "mm", "a4");
 
-    const width = pdf.internal.pageSize.getWidth();
+const pageWidth = pdf.internal.pageSize.getWidth();
+const pageHeight = pdf.internal.pageSize.getHeight();
 
-    const height = (canvas.height * width) / canvas.width;
+const imgWidth = pageWidth;
+  let imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-    pdf.addImage(imgData,"PNG",0,0,width,height);
+if (imgHeight < pageHeight) {
 
-    pdf.save(`${profile.username}-portfolio.pdf`);
-    
+    const yOffset = (pageHeight - imgHeight) / 2;
+
+    pdf.addImage(imgData, "PNG", 0, yOffset, imgWidth, imgHeight);
+
+} else {
+
+
+    imgHeight = pageHeight;
+
+    pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+
+}
+
+pdf.save(`${profile.username}-portfolio.pdf`);
+};
+
+const exportFormalPDF = async () => {
+
+const element = document.getElementById("portfolio");
+
+if (!element) return;
+
+element.classList.add("grayscale");
+
+const canvas = await html2canvas(element, {
+    scale: 2,
+    useCORS: true
+});
+
+element.classList.remove("grayscale");
+
+const imgData = canvas.toDataURL("image/png");
+
+const pdf = new jsPDF("p", "mm", "a4");
+
+const width = pdf.internal.pageSize.getWidth();
+  const height = (canvas.height * width) / canvas.width;
+
+pdf.addImage(imgData, "PNG", 0, 0, width, height);
+
+pdf.save(`${profile.username}-portfolio-formal.pdf`);
 };
 
 return (
@@ -131,6 +175,13 @@ return (
             >
             Download Portfolio PDF
             </button>
+
+            <button
+            onClick={exportFormalPDF}
+            className="ml-4 px-6 py-3 bg-gray-700 text-white rounded-lg hover:bg-gray-800 shadow transition"
+            >
+            Download Formal(B/W) PDF
+            </button>
         </div>
 
       {/* PROJECT TITLE */}
@@ -170,7 +221,7 @@ return (
                         {techStack.map((tech, index) => (
                         <span
                         key={index}
-                        className="px-3 py-1 text-sm bg-indigo-100 text-indigo-700 rounded-full"
+                        className="inline-flex items-center justify-center px-3 py-1 text-sm font-medium bg-indigo-100 text-indigo-700 rounded-full leading-none"
                         >
                         {tech}
                         </span>
