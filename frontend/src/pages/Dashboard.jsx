@@ -205,7 +205,7 @@ const handleDelete = async (id) => {
         `https://codefolio-r8zm.onrender.com/api/projects/${id}`,
         {
             headers: {
-            Authorization: `Bearer ${token}`
+                Authorization: `Bearer ${token}`
             }
         }
     );
@@ -220,16 +220,17 @@ const handleUpdate = async (project) => {
 
     const token = localStorage.getItem("token");
 
-    const updatedProject = {
-        ...project,
-        techStack: safeTechStack(project.techStack)
-    };
-
     try {
 
         const res = await axios.put(
             `https://codefolio-r8zm.onrender.com/api/projects/${project._id}`,
-            updatedProject,
+            {
+                title: project.title,
+                description: project.description,
+                techStack: safeTechStack(project.techStack),
+                repoLink: project.repoLink,
+                liveLink: project.liveLink
+            },
             {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -237,8 +238,8 @@ const handleUpdate = async (project) => {
             }
         );
 
-        setProjects(
-            projects.map((p) =>
+        setProjects(prev =>
+            prev.map(p =>
                 p._id === project._id ? res.data : p
             )
         );
@@ -248,8 +249,11 @@ const handleUpdate = async (project) => {
         toast.success("Project updated");
 
     } catch (error) {
-        console.log(error);
+
+        console.error("UPDATE ERROR:", error.response?.data || error.message);
+
         toast.error("Update failed");
+
     }
 };
 const handleLogout = () => {
