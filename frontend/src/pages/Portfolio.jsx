@@ -66,7 +66,8 @@ const pageHeight = pdf.internal.pageSize.getHeight();
 const imgWidth = pageWidth;
   let imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-if (imgHeight < pageHeight) {
+
+if (imgHeight <= pageHeight) {
 
     const yOffset = (pageHeight - imgHeight) / 2;
 
@@ -75,40 +76,11 @@ if (imgHeight < pageHeight) {
 } else {
 
 
-    imgHeight = pageHeight;
-
-    pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+    pdf.addImage(imgData, "PNG", 0, 0, imgWidth, pageHeight);
 
 }
+    pdf.save(`${profile.username}-portfolio.pdf`);
 
-pdf.save(`${profile.username}-portfolio.pdf`);
-};
-
-const exportFormalPDF = async () => {
-
-const element = document.getElementById("portfolio");
-
-if (!element) return;
-
-element.classList.add("grayscale");
-
-const canvas = await html2canvas(element, {
-    scale: 2,
-    useCORS: true
-});
-
-element.classList.remove("grayscale");
-
-const imgData = canvas.toDataURL("image/png");
-
-const pdf = new jsPDF("p", "mm", "a4");
-
-const width = pdf.internal.pageSize.getWidth();
-  const height = (canvas.height * width) / canvas.width;
-
-pdf.addImage(imgData, "PNG", 0, 0, width, height);
-
-pdf.save(`${profile.username}-portfolio-formal.pdf`);
 };
 
 return (
@@ -176,12 +148,6 @@ return (
             Download Portfolio PDF
             </button>
 
-            <button
-            onClick={exportFormalPDF}
-            className="ml-4 px-6 py-3 bg-gray-700 text-white rounded-lg hover:bg-gray-800 shadow transition"
-            >
-            Download Formal(B/W) PDF
-            </button>
         </div>
 
       {/* PROJECT TITLE */}
