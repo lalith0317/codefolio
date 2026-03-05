@@ -295,20 +295,18 @@ const handleImportGithub = async () => {
 
     for (const repo of newRepos) {
 
-        const formData = new FormData();
-
-        formData.append("title", repo.name);
-        formData.append("description", repo.description || "No description");
-        formData.append("repoLink", repo.html_url);
-        formData.append("liveLink", "");
-        formData.append("techStack", JSON.stringify(repo.language ? [repo.language] : []));
-
         await axios.post(
             "https://codefolio-r8zm.onrender.com/api/projects",
-            formData,
+            {
+                title: repo.name,
+                description: repo.description || "No description",
+                repoLink: repo.html_url,
+                liveLink: "",
+                techStack: repo.language ? [repo.language] : []
+            },
             {
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${token}`
                 }
             }
         );
