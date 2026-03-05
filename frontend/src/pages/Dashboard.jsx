@@ -274,57 +274,55 @@ const handleCopyLink = () => {
 const techStats = getTechStats();
 
 const handleImportGithub = async () => {
+try {
 
-    try {
-
-        const username = profile.github
+    const username = profile.github
         .replace("https://github.com/", "")
         .replace("/", "");
-        
-        const res = await axios.get(
-            `https://codefolio-r8zm.onrender.com/api/github/${username}`
-        );
 
-        const token = localStorage.getItem("token");
+    const res = await axios.get(
+        `https://codefolio-r8zm.onrender.com/api/github/${username}`
+    );
 
-        const existingTitles = projects.map(p => p.title.toLowerCase());
+    const token = localStorage.getItem("token");
 
-        const newRepos = res.data.filter(repo =>
-            !existingTitles.includes(repo.name.toLowerCase())
-        );
+    const existingTitles = projects.map(p => p.title.toLowerCase());
+
+    const newRepos = res.data.filter(
+        repo => !existingTitles.includes(repo.name.toLowerCase())
+    );
+
+    if (!newRepos.length) {
+        toast("No new repositories to import");
+        return;
+    }
 
     for (const repo of newRepos) {
-
         await axios.post(
             "https://codefolio-r8zm.onrender.com/api/projects",
             {
-                title: repo.name,
-                description: repo.description || "No description",
-                repoLink: repo.html_url,
-                liveLink: "",
-                techStack: repo.language ? [repo.language] : []
+            title: repo.name,
+            description: repo.description || "No description",
+            repoLink: repo.html_url,
+            liveLink: "",
+            techStack: repo.language ? [repo.language] : []
             },
             {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
             }
         );
-
     }
 
-        toast.success("GitHub repos imported");
+    toast.success("GitHub repos imported");
 
-        window.location.reload();
+    window.location.reload();
 
     } catch (error) {
-
         console.log("IMPORT ERROR:", error.response?.data || error.message);
-
         toast.error("Import failed");
-
     }
-
 };
 
 return (
@@ -491,6 +489,7 @@ return (
                 </button>
 
                 <button
+                    type="button"
                     onClick = {handleImportGithub}
                     className = "bg-gray-800 text-white px-4 py-2 rounded"
                 >
