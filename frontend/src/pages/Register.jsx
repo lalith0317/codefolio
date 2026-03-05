@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Register() {
+const name = useState("");
 const navigate = useNavigate();
 const [username, setUsername] = useState("");
 const [email, setEmail] = useState("");
