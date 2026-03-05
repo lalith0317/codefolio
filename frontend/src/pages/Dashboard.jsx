@@ -167,23 +167,19 @@ const handleAddProject = async (e) => {
         .map(t => t.trim())
         .filter(t => t !== "");
 
-const formData = new FormData();
-
-    formData.append("title", newProject.title);
-    formData.append("description", newProject.description);
-    formData.append("repoLink", newProject.repoLink);
-    formData.append("liveLink", newProject.liveLink);
-    formData.append("techStack", JSON.stringify(techArray));
-    formData.append("image", newProject.image);
-
 const res = await axios.post(
     "https://codefolio-r8zm.onrender.com/api/projects",
-    formData,
     {
-    headers:{
-    Authorization:`Bearer ${token}`,
-    "Content-Type":"multipart/form-data"
-    }
+    title: newProject.title,
+    description: newProject.description,
+    techStack: techArray,
+    repoLink: newProject.repoLink,
+    liveLink: newProject.liveLink
+    },
+    {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
     }
 );
 
@@ -307,7 +303,6 @@ try {
         {
             headers: {
                 Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json"
             }
         }
     );
