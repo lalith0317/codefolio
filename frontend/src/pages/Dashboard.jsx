@@ -277,7 +277,9 @@ const handleImportGithub = async () => {
 
     try {
 
-        const username = profile.github.split("github.com/").pop();
+        const username = profile.github
+        .replace("https://github.com/", "")
+        .replace("/", "");
         
         const res = await axios.get(
             `https://codefolio-r8zm.onrender.com/api/github/${username}`
@@ -307,7 +309,6 @@ const handleImportGithub = async () => {
             {
                 headers: {
                     Authorization: `Bearer ${token}`,
-                    "Content-Type": "multipart/form-data"
                 }
             }
         );
