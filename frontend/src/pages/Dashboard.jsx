@@ -245,7 +245,7 @@ const handleUpdate = async (project) => {
 
         setProjects(prevProjects =>
             prevProjects.map(p =>
-                p._id === project.id ? res.data : p
+                p._id === project._id ? res.data : p
             )
         );
 
