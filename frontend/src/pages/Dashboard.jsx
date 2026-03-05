@@ -291,26 +291,28 @@ const handleImportGithub = async () => {
             !existingTitles.includes(repo.name.toLowerCase())
         );
 
-        for (const repo of newRepos) {
+    for (const repo of newRepos) {
 
-            await axios.post(
-                "https://codefolio-r8zm.onrender.com/api/projects",
-                {
-                    title: repo.name,
-                    description: repo.description || "No description",
-                    techStack: repo.language ? [repo.language] : [],
-                    repoLink: repo.html_url,
-                    liveLink: ""
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        "content-Type": "application/json"
-                    }
+        const formData = new FormData();
+
+        formData.append("title", repo.name);
+        formData.append("description", repo.description || "No description");
+        formData.append("repoLink", repo.html_url);
+        formData.append("liveLink", "");
+        formData.append("techStack", repo.language ? repo.language : "");
+
+        await axios.post(
+            "https://codefolio-r8zm.onrender.com/api/projects",
+            formData,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "multipart/form-data"
                 }
-            );
+            }
+        );
 
-        }
+    }
 
         toast.success("GitHub repos imported");
 
