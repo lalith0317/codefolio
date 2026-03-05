@@ -10,18 +10,15 @@ const Project = require("../models/Project");
 router.post("/", protect, async (req, res) => {
 
     try {
-        if(!req.body){
-            return res.status(400).json({
-                message: "No data received"
-            });
-        }
-        const { title, description, techStack, repoLink, liveLink } = req.body || {};
 
-        if(!title){
+        const { title, description, techStack, repoLink, liveLink } = req.body;
+
+        if (!title) {
             return res.status(400).json({
                 message: "Title is required"
             });
         }
+
         const project = new Project({
             title,
             description,
