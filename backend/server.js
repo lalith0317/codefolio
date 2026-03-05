@@ -5,11 +5,13 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 
 const app = express();
+const githubRoutes = require("./routes/githubRoutes");
+
 app.use(cors());
 app.use(express.json());
 app.use("/uploads", express.static("uploads"));
 
-app.use("/api/github", require("./routes/githubRoutes"));
+app.use("/api/github", githubRoutes);
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/user", require("./routes/userRoutes"));
 app.use("/api/projects", require("./routes/projectRoutes"));
