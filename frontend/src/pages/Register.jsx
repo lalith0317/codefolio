@@ -6,9 +6,33 @@ const [username, setUsername] = useState("");
 const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
 
-const handleSubmit = (e) => {
+const handleSubmit = async (e) => {
+
     e.preventDefault();
-    console.log({ username, email, password });
+
+    try {
+
+        await axios.post(
+            "https://codefolio-r8zm.onrender.com/api/auth/register",
+            {
+                name,
+                email,
+                password
+            }
+        );
+
+        toast.success("Registered successfully");
+
+        navigate("/login");
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert("Registration failed");
+
+    }
+
 };
 
 return (
