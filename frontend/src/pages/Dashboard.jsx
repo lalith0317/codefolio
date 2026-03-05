@@ -270,7 +270,7 @@ const handleLogout = () => {
 
 };
 
-const portfolioUrl = `${window.location.origin}/${profile?.name || ""}`;
+const portfolioUrl = `${window.location.origin}/${profile.username}`;
 const handleCopyLink = () => {
 
     navigator.clipboard.writeText(portfolioUrl);
@@ -354,12 +354,20 @@ return (
 
                 <div className="flex gap-3">
 
-                <button
-                    onClick={handleCopyLink}
-                    className="bg-blue-600 text-white px-4 py-2 rounded-lg"
-                >
-                    Copy Portfolio Link
-                </button>
+                <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded-xl flex justify-between items-center">
+
+                    <p className="text-sm font-medium">
+                        {portfolioUrl}
+                    </p>
+
+                    <button
+                        onClick={handleCopyLink}
+                        className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition"
+                    >
+                        Copy Portfolio Link
+                    </button>
+
+                </div>
 
                 <button
                     onClick={() => setDarkMode(!darkMode)}
@@ -396,9 +404,8 @@ return (
 
                 <input
                     name="name"
-                    value={profile.name}
-                    onChange={handleProfileChange}
-                    placeholder="Name"
+                    value={profile.username}
+                    readOnly
                     className="w-full p-2 border rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                 />
 

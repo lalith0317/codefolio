@@ -8,25 +8,46 @@ const router = express.Router();
 
 router.post("/register", async (req, res) => {
 try {
-    const { username, email, password } = req.body;
 
-    const userExists = await User.findOne({ email });
-    if (userExists) {
-    return res.status(400).json({ message: "User already exists" });
+    let { username, email, password } = req.body;
+
+    username = username.toLowerCase();
+
+    const emailExists = await User.findOne({ email });
+    if (emailExists) {
+        return res.status(400).json({
+            message: "Email already registered"
+        });
+    }
+
+    const usernameExists = await User.findOne({ username });
+    if (usernameExists) {
+        return res.status(400).json({
+            message: "Username already taken"
+        });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await User.create({
-    username,
-    email,
-    password: hashedPassword,
+        username,
+        email,
+        password: hashedPassword
     });
 
-    res.json({ message: "Registered successfully" });
+    res.json({
+        message: "Registered successfully"
+    });
+
 } catch (err) {
-    res.status(500).json({ message: "Server error" });
-}
+
+    console.error(err);
+
+    res.status(500).json({
+        message: "Server error"
+    });
+
+    }
 });
 
 

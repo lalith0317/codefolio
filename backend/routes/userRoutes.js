@@ -12,14 +12,19 @@ res.json(user);
 
 
 router.put("/profile", protect, async (req, res) => {
-const { name, bio, github, linkedin } = req.body;
 
+const { bio, github, linkedin } = req.body;
 const user = await User.findById(req.user.id);
 
-user.name = name;
-user.bio = bio;
-user.github = github;
-user.linkedin = linkedin;
+if (!user) {
+    return res.status(404).json({
+        message: "User not found"
+    });
+}
+
+user.bio = bio || user.bio;
+user.github = github || user.github;
+user.linkedin = linkedin || user.linkedin;
 
 await user.save();
 res.json({ message: "Profile updated" });
