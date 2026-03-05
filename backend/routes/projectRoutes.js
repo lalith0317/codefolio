@@ -25,7 +25,7 @@ router.post("/", protect, async (req, res) => {
             techStack,
             repoLink,
             liveLink,
-            user: req.user.id
+            user: req.user._id
         });
 
         const savedProject = await project.save();
